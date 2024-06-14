@@ -1,0 +1,68 @@
+@import "../../sass/base/mixins.scss";
+@import "../../sass/base/variables.scss";
+.rosmost{
+	background-color:#252B42;
+	height: 1100px;
+	&__wrapper{
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		column-gap:115px;
+		padding-top: 150px;
+		&__title{
+			color:white;
+			font-size: 45px;
+			font-weight: bold;
+
+
+		}
+		&__button{
+			border:none;
+			border-radius:30px;
+		}
+		&__desc{
+			color:white;
+		}
+	}
+	&__form{
+		border-radius:30px;
+		margin-top: 30px;
+		background-color:white;
+		display:grid;
+		grid-template-columns: 1fr 1fr;
+		
+	
+		&__img{
+			width:100%;
+			height: 100%;
+		
+			border-top-left-radius:30px ;
+			border-bottom-left-radius: 30px;
+		}
+		&__wrapper{
+			padding: 0 30px 0 30px;
+			display: grid;
+    		grid-template-rows: 130px 40px 35px 40px 35px 40px 35px 40px 35px ; /* Это говорит браузеру использовать две строки для каждого элемента */
+    		gap: 7px; 
+			&__title{
+				margin-top: 50px;
+				text-align: center;
+				font-weight: bold;
+				font-size: 25px;
+			}
+			&__label{
+				margin-top: 25px;
+				font-weight: bold;
+			}
+			&__input{
+				border-radius:5px;
+				padding-left: 8px;
+				border: 1px solid black;
+			}
+			&__button{
+				border:none;
+				border-radius:30px;
+				margin-top: 20%;
+			}
+		}
+	}
+}

@@ -1,0 +1,82 @@
+@import "../../sass/base/mixins.scss";
+@import "../../sass/base/variables.scss";
+.footer{
+	height: 400px;
+	background-color: $bg-color;
+  	&__wrapper{
+		padding-top: 60px;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		justify-content: space-between;
+		gap: 37px;
+
+		&__title{
+			font-size: 20px;
+			font-weight: bold;
+
+		}
+		&__list{
+			list-style-type: none;
+			li{
+				display: flex;
+				align-items:center;
+				padding: 5px 0 5px 0;
+				a{
+					
+					color:#737373;
+				}
+				a:hover{
+					text-decoration: underline;
+				}
+			}
+		}
+		
+	}
+}
+.logoWrapper{
+	display: flex;
+	justify-content: space-between;
+	width: 230px;
+	align-items:center;
+	h3{
+		text-align: start;
+		color:$main-color;
+		font-size: 30px;
+		text-shadow: 2px 2px 4px rgba(54, 202, 79, 0.5);
+	}
+}
+.tel::before{
+	display: inline-block;
+	content:'';
+	background: url('../../icons/tel.png') no-repeat 50%/cover;	
+	width: 20px;
+	height: 20px;
+	margin-right: 20px;
+}
+.adres::before{
+
+	display: inline-block;
+	content:'';
+	background: url('../../icons/adres.png') no-repeat 50%/cover;	
+	width: 20px;
+	height: 25px;
+	margin-right: 20px;
+}
+.email::before{
+	display: inline-block;
+	content:'';
+	background: url('../../icons/email.png') no-repeat 50%/cover;	
+	width: 20px;
+	height: 23px;
+	margin-right: 20px;
+
+}
+.email:hover{
+	text-decoration: underline;
+}
+.adres:hover{
+	text-decoration: underline;
+}
+.tel:hover{
+	text-decoration: underline;
+}

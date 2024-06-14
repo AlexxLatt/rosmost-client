@@ -1,0 +1,103 @@
+@import "./mixins.scss";
+@import "./variables.scss";
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(195, 193, 193, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.bg.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.registerForm,
+.loginForm {
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  position: relative; /* Добавлено для корректного позиционирования кнопки закрытия */
+}
+
+.registerForm {
+  min-height: 250px;
+}
+
+.loginForm {
+  min-height: 200px;
+}
+
+.bg.show .registerForm,
+.bg.show .loginForm {
+  opacity: 1;
+  visibility: visible;
+}
+
+.registerForm__wrapper__Input,
+.loginForm__wrapper__Input {
+  margin-bottom: 15px; /* Увеличиваем отступ между input и кнопкой закрытия */
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.registerForm__wrapper__btn,
+.loginForm__wrapper__btn {
+  @include button_settings;
+  border: 1px solid $main-color;
+  margin: 15px auto 0; /* Устанавливаем отступ сверху, чтобы кнопка была выше input */
+  display: flex;
+  justify-content: center;
+}
+
+.registerForm__close,
+.loginForm__close {
+  cursor: pointer;
+  font-size: 25px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: -8px;
+  right: -5px;
+}
+
+.registerForm__title,
+.loginForm__title {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+}
+
+.loginForm__btn:hover,
+.registerForm__btn:hover {
+  color: black;
+  background: white;
+}
+.loginForm__wrapper,
+.registerForm__wrapper{
+  margin-top: 20px;
+}
+.error{
+  color: red;
+  text-align: center;
+  font-size: 14px;
+
+}

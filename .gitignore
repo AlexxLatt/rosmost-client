@@ -1,0 +1,32 @@
+# Игнорировать файлы и каталоги, созданные операционной системой
+.DS_Store
+Thumbs.db
+
+# Игнорировать каталог node_modules
+node_modules/
+
+# Игнорировать каталог build или dist, если используется для сборки проекта
+build/
+dist/
+
+# Игнорировать локальные файлы настроек
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Игнорировать файлы npm-debug.log
+npm-debug.log*
+
+# Игнорировать файлы yarn-error.log
+yarn-error.log*
+
+# Игнорировать каталог coverage, если используется для хранения отчетов о покрытии
+coverage/
+
+# Игнорировать файлы конфигурации IDE или редактора
+.idea/
+.vscode/
+
+# Игнорировать файлы конфигурации для eslint
+.eslintcache

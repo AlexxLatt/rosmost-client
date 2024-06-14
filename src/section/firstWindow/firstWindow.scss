@@ -1,0 +1,81 @@
+@import "../../sass/base/mixins.scss";
+@import "../../sass/base/variables.scss";
+.firstWindow{
+	background: url('../../img/mainBg.png') no-repeat 50%/cover;
+
+	height: 87vh;
+	position: relative;
+	
+	&__main{
+		
+		position: relative;
+		z-index: 2;
+		&__title{
+			padding-top: 180px;
+			color:white;
+			font-size: 60px;
+			text-align: center;
+		}
+		&__subTitle{
+			margin-top: 40px;
+			color:white;
+			font-size: 32px;
+			text-align: center;
+		}
+	}
+	&__infWrapper{
+		z-index: 2;
+		display: grid;
+		position: absolute;
+		width: 1240px;
+		grid-template-columns: repeat(3,328px);
+		grid-template-rows: 254px;
+		grid-auto-rows: 254px;
+		justify-content: space-between;
+		margin-top: 310px;
+		row-gap: 40px;
+		&__title{
+			text-align: center;
+			font-weight: bold;
+			font-style: 20px;
+		}
+		&__item{
+			border-radius: 10px;
+			background-color:white;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+
+
+			&__icons{
+				margin-top: 30px;
+				margin-left: 40px;
+			}
+			&__text{
+				font-size: 25px;
+				margin-left: 40px;
+				margin-top: 10px;
+			}
+			&__textWhite{
+				font-size: 25px;
+				color:white;
+				margin-left: 40px;
+				margin-top: 10px;
+			}
+		}
+		&__item:nth-child(3){
+			background-color:$main-color;
+		}
+	}
+}
+.firstWindow::before{
+	content:'';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	  background-color: rgba(0, 0, 0, 0.4); /* Черный цвет с прозрачностью 50% */
+}
+.adventages__title{
+	text-align: center;
+	font-weight: bold;
+	font-size: 40px;
+	transform: translateY(250px);
+}

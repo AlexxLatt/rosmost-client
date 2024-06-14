@@ -1,0 +1,13 @@
+@mixin button_settings {
+	cursor: pointer;
+    margin-top: 25px;
+	height: 45px;
+	background: $main-color;
+	box-shadow: 0 4px 4px 0 rgba(76,101,243,.15);
+    padding: 12px 25px;
+	border-radius: 5px; 
+	color:white;
+    text-align:center;
+    transition: all 0.5s;  
+    
+}

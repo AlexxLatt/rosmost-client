@@ -1,0 +1,140 @@
+@import '../../../sass/base/variables.scss';
+.Filter{
+	&__title{
+		position: absolute;
+		font-size: 36px;
+		padding-top: 10px;
+		text-align: center;
+		left: 50%;
+		top: 13%;
+		transform: translateX(-50%);
+	}
+	&__mainWrapper{
+		margin-top: 40px;
+		display: grid;
+		grid-template-columns: 300px 390px 200px;
+		justify-content: center;
+
+		&__inputWrapper{
+			justify-self: center;
+			align-self: center;
+			display: grid;
+			grid-template-columns: 1fr 7fr;
+			column-gap: 7px;
+			
+			&__iconSearch{
+				align-self:center;
+				justify-self: start;
+			}
+			&__input{
+				border-radius: 10px;
+				padding-left: 10px;
+				width: 180px;
+				height: 40px;
+				margin-left: 9px;
+				background-color: white;
+				border: none;
+				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+
+			}
+			
+		}
+		
+		&__buttonWrapper{
+			justify-self: center;
+			display: grid;
+			grid-template-columns: 1fr 8fr;
+			column-gap: 10px;
+			margin-left: 60px;
+				
+			&__item{
+					width: 190px;
+					height: 20px;
+					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+			}
+			&__label{
+				justify-self: center;
+				align-self: center;
+				font-size: 20px;
+				color:black;
+				
+			}
+		}
+		&__profileWrapper{
+			&__clickArea{
+				padding-left: 27px;
+				cursor: pointer;
+				display: grid;
+				grid-template-columns: 96px 50px;
+				&__name{
+					transform: translateY(3px);
+					font-size: 14px;
+					display: flex;
+					justify-content: flex-end;
+				}
+				
+			}
+		}
+
+
+
+	}
+	
+}
+.dropdown-menu{
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+	border: 1px solid black;
+	border-color: hsl(0, 0%, 80%);
+	border-radius: 10px;
+	width: 164px;
+	min-height: 100px;
+	transition: all 0.3s;
+	font-style: 15px;
+	align-items:center;
+	&__item{
+		list-style-type: none;
+		border-radius: 10px;
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		img{
+			padding-left: 33px;
+			width: 20px;
+			height: 20px;
+		}
+		div{
+			width: 102px;
+			font-weight: bold;
+		}
+	}
+	&__item:hover{
+		background-color: #deebff;
+	}
+	&__itemCreate{
+		list-style-type: none;
+		border-radius: 10px;
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		img{
+			margin-top: 10px;
+			padding-left: 30px;
+			width: 20px;
+			height: 20px;
+		}
+		div{
+			
+			width: 105px;
+			font-weight: bold;
+		}
+	}
+	&__itemCreate:hover{
+		background-color: #deebff;
+	}
+}

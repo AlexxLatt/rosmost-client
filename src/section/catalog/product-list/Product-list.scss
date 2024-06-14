@@ -1,0 +1,15 @@
+.productList {
+	// margin-top: 55px;
+	background-image: url("../../../img/bg(map).png");
+	background-repeat: no-repeat;
+	background-position: 20%;
+	background-size: cover;
+	padding-top: 50px;
+	display: grid;
+	grid-template-columns: repeat(3, 250px);
+	grid-template-rows: 270px;
+	grid-auto-rows: 270px;
+	gap: 50px;
+	justify-content: center;
+	height: 100vh;
+}
