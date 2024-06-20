@@ -3,6 +3,117 @@
 .rosmost{
 	background-color:#252B42;
 	height: 1100px;
+	&__errorContact{
+		background-color: rgba(0, 0, 0, 0.5); // Прозрачно-серый фон
+		height: 100vh;
+		width: 100vw;
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 1.3s ease-in-out;
+		&__form{
+			position: absolute;
+			z-index: 11;
+			background-color:white;
+			border-radius: 10px;
+			height: 200px;
+			width: 300px;
+			&__title{
+				text-align: center;
+				text-transform: uppercase;
+				font-weight: bold;
+				margin-top: 10px;
+			}
+			&__btn{
+				margin: 0 auto;
+				color: white;
+				background-color:red;
+				border:1px solid red;
+				border-radius:10px;
+				height: 30px;
+				width: 100px;
+				transition: all 0.3s;
+				cursor: pointer;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 20px;
+				font-size: 18px;
+
+			}
+			&__btn:hover{
+				color:red;
+				background-color:white;
+			}
+			&__img{
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 30px;
+			}
+		}
+	}
+		
+	&__successContact{
+		background-color: rgba(0, 0, 0, 0.5); // Прозрачно-серый фон
+		height: 100vh;
+		width: 100vw;
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 1.3s ease-in-out;
+		&__form{
+			position: absolute;
+			z-index: 11;
+			background-color:white;
+			border-radius: 10px;
+			height: 200px;
+			width: 300px;
+			&__title{
+				text-align: center;
+				text-transform: uppercase;
+				font-weight: bold;
+				margin-top: 10px;
+			}
+			&__img{
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 30px;
+			}
+			&__btn{
+				margin: 0 auto;
+				color: white;
+				background-color: $main-color;
+				border:1px solid $main-color;
+				border-radius:10px;
+				height: 30px;
+				width: 100px;
+				transition: all 0.3s;
+				cursor: pointer;
+				margin-left: 50%;
+				transform: translateX(-50%);
+				margin-top: 40px;
+				font-size: 18px;
+
+			}
+			&__btn:hover{
+				color:$main-color;
+				background-color:white;
+			}
+		}
+	}
+	&__error{
+		position: absolute;
+		color:red;
+		top:405%;
+		font-size: 13px;
+	}
 	&__wrapper{
 		display: grid;
 		grid-template-columns: 3fr 1fr;
@@ -30,6 +141,10 @@
 		display:grid;
 		grid-template-columns: 1fr 1fr;
 		
+		&__label{
+			padding-top: 25px;
+			font-weight: bold;
+		}
 	
 		&__img{
 			width:100%;
@@ -49,10 +164,7 @@
 				font-weight: bold;
 				font-size: 25px;
 			}
-			&__label{
-				margin-top: 25px;
-				font-weight: bold;
-			}
+			
 			&__input{
 				border-radius:5px;
 				padding-left: 8px;

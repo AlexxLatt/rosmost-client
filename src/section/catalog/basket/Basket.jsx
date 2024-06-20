@@ -210,9 +210,10 @@ class Basket extends Component {
       case 'cardNumber':
         errors.cardNumber = value.length !== 16 || !/^\d{16}$/.test(value) ? 'Номер карты должен содержать 16 цифр' : '';
         break;
-      case 'cardMonth':
-        errors.cardMonth = value.length !== 2 || !/^\d{2}$/.test(value) ? 'Месяц должен содержать 2 цифры' : '';
-        break;
+        case 'cardMonth':
+          errors.cardMonth = value.length !== 2 || !/^(0[1-9]|1[0-2])$/.test(value) ? 'Месяц должен быть от 01 до 12' : '';
+          break;
+      
       case 'cardYear':
         errors.cardYear = value.length !== 2 || !/^\d{2}$/.test(value) ? 'Год должен содержать 2 цифры' : '';
         break;

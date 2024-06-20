@@ -96,11 +96,11 @@ class Purchases extends Component {
               <div className="purchases__window__list">
                 {purchases.map((purchase, index) => (
                   <div key={index} className="purchases__window__list__item">
-                    <img src="" alt="упс..." className="purchases__window__list__item__img" />
+                    <img src={purchase.img} alt="упс..." className="purchases__window__list__item__img" />
                     <h2 className="purchases__window__list__item__title">{purchase.title}</h2>
                     <h2 className="purchases__window__list__item__title">{purchase.country}</h2>
                     <p className="purchases__window__list__item__description">{purchase.description}</p>
-                    <p className="purchases__window__list__item__cost">Price: {purchase.cost}$</p>
+                    <p className="purchases__window__list__item__cost">Цена: {purchase.cost}р</p>
                     <button onClick={() => this.toggleMoreDetailed(purchase.id)} className="purchases__window__list__item__btn">Подробнее</button>
                   </div>
                 ))}

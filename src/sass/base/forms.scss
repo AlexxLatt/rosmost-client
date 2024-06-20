@@ -101,3 +101,24 @@
   font-size: 14px;
 
 }
+
+.registerForm__wrapper{
+  &__checkbox{
+    &__label{
+     margin-left: 10px;
+     a{
+      color:$main-color;
+      transition: all 0.3s;
+     }
+     a:hover{
+      text-decoration: underline
+    
+     }
+    }
+    &__error{
+      color: red;
+      text-transform: lowercase;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import profileIcon from "../../../icons/profile1.png";
-import './Profile.scss'; // Import CSS file
+import './Profile.scss'; // Импорт CSS файла
 
 class Profile extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Profile extends Component {
       errors: {
         passportSeries: '',
         passportCode: '',
-        cardDate: '' // Combined error message for card year and month
+        cardDate: '' // Общая ошибка для года и месяца карты
       }
     };
   }
@@ -66,10 +66,10 @@ class Profile extends Component {
     this.setState({ [name]: value, errors: errors });
   };
 
-  saveAndChenge = () => {
+  saveAndChange = () => {
     const { errors, passportSeries, passportCode } = this.state;
 
-    // Validation error check
+    // Проверка на наличие ошибок валидации
     if (errors.passportSeries || errors.passportCode ||
         passportSeries.length !== 6 || passportCode.length !== 4 || 
         !/^\d+$/.test(passportSeries) || !/^\d+$/.test(passportCode)) {
@@ -124,7 +124,7 @@ class Profile extends Component {
 
   updateUser = async () => {
     try {
-      const { address, passportSeries, passportCode, username, email } = this.state;
+      const { address, passportSeries, passportCode, username, email, img } = this.state;
       const token = localStorage.getItem('token');
       if (!token) {
         console.log("Токен не найден в localStorage");
@@ -137,7 +137,8 @@ class Profile extends Component {
           passportSeries: passportSeries,
           passportCode: passportCode,
           username: username,
-          email: email
+          email: email,
+          img: img
         }
       }, {
         headers: {
@@ -147,6 +148,7 @@ class Profile extends Component {
 
       if (response.status === 200 || response.status === 201) {
         console.log('Пользователь успешно обновлен');
+        console.log(response.data);
         this.setState({
           isProfileWindow: false
         });
@@ -158,6 +160,27 @@ class Profile extends Component {
     }
   };
 
+  handleImageChange = async (e) => {
+    const formdata = new FormData();
+    formdata.append("image", e.target.files[0]);
+
+    try {
+      const response = await axios.post('https://api.imgur.com/3/image/', formdata, {
+        headers: {
+          Authorization: 'Client-ID 11c5e80f09a3b8b'
+        }
+      });
+      
+      if (response.status === 200 || response.status === 201) {
+        this.setState({ img: response.data.data.link });
+      } else {
+        console.error('Ошибка при загрузке изображения:', response.status);
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  }
+
   render() {
     const { address, email, username, passportCode, passportSeries, img, isProfileWindow, profileDataWindow, firstName, secondName, patromicName, errors } = this.state;
     return (
@@ -168,7 +191,7 @@ class Profile extends Component {
               <div onClick={this.toggleProfileDataWindow} className="profile__window__close">×</div>
               <div className="profile__window__title">Ваш профиль</div>
               <div className="profile__window__wrapper">
-                <img src={profileIcon || ''} alt="Profile" className="profile__window__wrapper__img" />
+                <img src={img || profileIcon} alt="Profile" className="profile__window__wrapper__img" />
                 <div className="profile__window__wrapper__username label">Username: {username}</div>
                 <div className="profile__window__wrapper__email label">Email: {email}</div>
                 <div className="profile__window__wrapper__username label">Имя: {firstName}</div>
@@ -249,9 +272,8 @@ class Profile extends Component {
                   onChange={this.handleChange}
                 />
                 {errors.passportSeries.length > 0 &&
-                  <div className='error'>{errors.passportSeries}</div>}
-                <label
-                  htmlFor="passportCode">Код паспорта</label>
+                  <span className='error'>{errors.passportSeries}</span>}
+                <label htmlFor="passportCode">Код паспорта</label>
                 <input
                   id="passportCode"
                   name="passportCode"
@@ -260,8 +282,16 @@ class Profile extends Component {
                   onChange={this.handleChange}
                 />
                 {errors.passportCode.length > 0 &&
-                  <div className='error'>{errors.passportCode}</div>}
-                <div onClick={this.saveAndChenge} className="profile__window__wrapper__btn">Сохранить</div>
+                  <span className='error'>{errors.passportCode}</span>}
+                <label htmlFor="img">Изменить изображение профиля</label>
+                <input
+                  type="file"
+                  id="img"
+                  name="img"
+                  className="profile__window__wrapper__input"
+                  onChange={this.handleImageChange}
+                />
+                <button onClick={this.saveAndChange} className="profile__window__wrapper__save">Сохранить изменения</button>
               </div>
             </div>
           </div>

@@ -20,7 +20,9 @@ class App extends Component {
       username: "",
       token: "",
       registrationError: null,
-      loginError: null
+      loginError: null,
+      agreedToTerms: false, // Track if terms are agreed
+      termsError: "" // Error message for terms agreement
     };
   }
 
@@ -41,6 +43,7 @@ class App extends Component {
   };
 
   register = async (email, password, username) => {
+    localStorage.clear();
     try {
       const response = await axios.post("http://localhost:3000/users", {
         "user": {
@@ -67,7 +70,13 @@ class App extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password, username } = this.state;
+    const { email, password, username, agreedToTerms } = this.state;
+
+    if (!agreedToTerms) {
+      this.setState({ termsError: "Пожалуйста, согласитесь с условиями." });
+      return;
+    }
+
     await this.register(email, password, username);
   };
 
@@ -76,11 +85,18 @@ class App extends Component {
     this.setState({ [name]: value });
   };
 
+  handleCheckboxChange = () => {
+    this.setState((prevState) => ({
+      agreedToTerms: !prevState.agreedToTerms,
+      termsError: "" // Clear terms error message on checkbox change
+    }));
+  };
+
   renderRegistrationForm = () => {
-    const { showRegistrationForm, email, password, username, registrationError } = this.state;
+    const { showRegistrationForm, email, password, username, registrationError, agreedToTerms, termsError } = this.state;
     if (showRegistrationForm) {
       return (
-        <div className="bg show" onClick={this.toggleRegistrationForm}>
+        <div className="bg show">
           <form className="registerForm" onClick={(e) => e.stopPropagation()} onSubmit={this.handleSubmit}>
             <div onClick={this.toggleRegistrationForm} className="registerForm__close">×</div>
             <div className="registerForm__title">Регистрация</div>
@@ -89,6 +105,11 @@ class App extends Component {
               <input name="username" value={username} onChange={this.handleChange} className="registerForm__wrapper__Input" type="text" placeholder="  Username" />
               <input name="email" value={email} onChange={this.handleChange} className="registerForm__wrapper__Input" type="email" placeholder="  Email" />
               <input name="password" value={password} onChange={this.handleChange} className="registerForm__wrapper__Input" type="password" placeholder="  Password" />
+              <label>
+                <input className="registerForm__wrapper__checkbox" type="checkbox" checked={agreedToTerms} onChange={this.handleCheckboxChange} />
+                <span className="registerForm__wrapper__checkbox__label">Я согласен с <a href="../policy.html" target="_blank">условиями</a></span>
+              </label>
+              {termsError && <div className="registerForm__wrapper__checkbox__error">{termsError}</div>}
               <button className="registerForm__wrapper__btn" type="submit">Зарегистрироваться</button>
             </div>
           </form>
@@ -99,6 +120,7 @@ class App extends Component {
 
   login = async (email, password) => {
     try {
+      localStorage.clear();
       const response = await axios.post("http://localhost:3000/users/login", {
         "user": {
           "email": email,
@@ -135,7 +157,7 @@ class App extends Component {
     const { showLoginForm, email, password, loginError } = this.state;
     if (showLoginForm) {
       return (
-        <div className="bg show" onClick={this.toggleLoginForm}>
+        <div className="bg show" >
           <form className="loginForm" onClick={(e) => e.stopPropagation()} onSubmit={this.handleLoginSubmit}>
             <div className="loginForm__close" onClick={this.toggleLoginForm}>×</div>
             <div className="loginForm__title">Вход</div>
