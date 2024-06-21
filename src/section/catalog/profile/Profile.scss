@@ -41,7 +41,7 @@
                 color:$main-color;
                 background-color:white;
             }
-            
+           
         }
     }
 }
@@ -52,4 +52,106 @@
     margin-top: 5px;
     margin-bottom: 5px;
     border: 1px solid black;
+}
+.labelImg{
+    font-size: 14px;
+    border-radius:10px;
+    font-weight: bold;
+    padding-left: 5px;
+    margin-top: 15px;
+    margin-bottom: 10px;    
+    text-align: center;
+}
+.input-file {
+	position: relative;
+	display: inline-block;
+}
+.input-file span {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	background-color: $main-color;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+    transform: translateX(50%);
+}
+.input-file input[type=file] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+ 
+/* Focus */
+.input-file input[type=file]:focus + span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+ 
+/* Hover/active */
+.input-file:hover span {
+	background-color: #59be6e;
+}
+.input-file:active span {
+	background-color: #2E703A;
+}
+ 
+/* Disabled */
+.input-file input[type=file]:disabled + span {
+	background-color: #eee;
+}
+.loading{
+    background-color: rgba(0, 0, 0, 0.5); // Прозрачно-серый фон
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 15;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.3s ease-in-out;
+    &__window{
+        padding: 30px 30px 30px 30px;
+        background-color: white;
+        width: 200px;
+        min-height: 100px;
+        border-radius: 10px;
+        border: 1px solid black;
+        z-index: 16;
+        &__title{
+            z-index: 16;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+        &__img{
+            margin-left: 65px;
+            margin-top: 20px;
+            max-width: 100px;
+            max-height: 100px;
+        }
+    }
+}
+.inputFile{
+    background-color: $main-color;
+    border-radius:10px;
+    color:white;
+    border:1px solid $main-color;
+
 }

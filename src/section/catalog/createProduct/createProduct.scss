@@ -15,7 +15,7 @@
         padding: 30px 30px 30px 30px;
         background-color: white;
         width: 400px;
-        height: 500px;
+        min-height: 500px;
         border-radius: 10px;
         border: 1px solid black;
         &__close{
@@ -33,9 +33,6 @@
             display: grid;
             &__label{
                 margin-top: 15px;
-            }
-            &__input{
-               
             }
             &__btn{
                 margin: 0 auto;
@@ -60,3 +57,7 @@
         }
     }
 }
+.crLeft{
+    margin-left: 56px;
+}
+    

@@ -67,10 +67,15 @@
 				display: grid;
 				grid-template-columns: 96px 50px;
 				&__name{
-					transform: translateY(3px);
+					transform: translateY(7px);
 					font-size: 14px;
 					display: flex;
 					justify-content: flex-end;
+				}
+				&__img{
+					max-width: 40px;
+					max-height: 40px;
+					
 				}
 				
 			}

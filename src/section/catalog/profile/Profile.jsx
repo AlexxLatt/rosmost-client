@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import profileIcon from "../../../icons/profile1.png";
 import './Profile.scss'; // Импорт CSS файла
-
+import loading from "../../../icons/loading.gif";
+import rofloLoading from "../../../icons/rofloLoading.gif";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class Profile extends Component {
       img: '',
       isProfileWindow: false,
       profileDataWindow: true,
+      isLoadingWindow:false,
       errors: {
         passportSeries: '',
         passportCode: '',
@@ -140,6 +142,8 @@ class Profile extends Component {
           email: email,
           img: img
         }
+      
+
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -152,6 +156,7 @@ class Profile extends Component {
         this.setState({
           isProfileWindow: false
         });
+        window.location.reload();
       } else {
         console.log('Неожиданный код статуса:', response.status);
       }
@@ -165,6 +170,7 @@ class Profile extends Component {
     formdata.append("image", e.target.files[0]);
 
     try {
+      this.setState({isLoadingWindow: true})
       const response = await axios.post('https://api.imgur.com/3/image/', formdata, {
         headers: {
           Authorization: 'Client-ID 11c5e80f09a3b8b'
@@ -172,7 +178,13 @@ class Profile extends Component {
       });
       
       if (response.status === 200 || response.status === 201) {
-        this.setState({ img: response.data.data.link });
+        console.log("Картинка была успешно сохранена");
+
+        this.setState({isLoadingWindow: false})
+        this.setState({ img: response.data.data.link }, () => {
+          this.updateUser(); // Обновление пользователя после обновления изображения
+        });
+        
       } else {
         console.error('Ошибка при загрузке изображения:', response.status);
       }
@@ -182,7 +194,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { address, email, username, passportCode, passportSeries, img, isProfileWindow, profileDataWindow, firstName, secondName, patromicName, errors } = this.state;
+    const { address, email, username, passportCode, passportSeries, img, isProfileWindow,isLoadingWindow, profileDataWindow, firstName, secondName, patromicName, errors } = this.state;
     return (
       <>
         {profileDataWindow && (
@@ -283,18 +295,29 @@ class Profile extends Component {
                 />
                 {errors.passportCode.length > 0 &&
                   <span className='error'>{errors.passportCode}</span>}
-                <label htmlFor="img">Изменить изображение профиля</label>
-                <input
+                <label className='labelImg' htmlFor="img">Изменить изображение профиля</label>
+                <label class="input-file">
+                <input        
                   type="file"
                   id="img"
                   name="img"
-                  className="profile__window__wrapper__input"
+                  className="inputFile"
                   onChange={this.handleImageChange}
                 />
-                <button onClick={this.saveAndChange} className="profile__window__wrapper__save">Сохранить изменения</button>
+                <span>Выберите файл</span>  
+                </label>
+                <button onClick={this.saveAndChange} className="profile__window__wrapper__btn">Сохранить изменения</button>
               </div>
             </div>
           </div>
+        )}
+        {isLoadingWindow && (
+          <div className='loading'>
+            <div className="loading__window">
+              <div className="loading__window__title">Загружаем изображение</div>
+              <img className='loading__window__img' src={loading} alt="упс..." />
+            </div>
+         </div>
         )}
       </>
     );

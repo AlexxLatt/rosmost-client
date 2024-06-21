@@ -4,6 +4,7 @@ import iconSearch from "../../../icons/InputSearch.png";
 import iconCreate from "../../../icons/create.png";
 import iconUser from "../../../icons/user.png";
 import iconBasket from "../../../icons/cart.png";
+import iconApplications from "../../../icons/applications.png";
 import iconProfile from "../../../icons/profile.png";
 import iconPurshase from "../../../icons/coin.png";
 import iconLogout from "../../../icons/logout.png";
@@ -14,6 +15,7 @@ import Profile from '../profile/Profile';
 import Purchases from '../purchases/Purchases';
 import axios from 'axios'; // Don't forget to import axios
 import CreateProduct from '../createProduct/createProduct';
+import Applications from '../applications/Applications';
 
 class Filter extends Component {
   constructor(props) {
@@ -26,8 +28,9 @@ class Filter extends Component {
       isProfileOpen: false,
       isPurchasesOpen: false,
       isCreateProduct: false,
-      isAdmin: false
-
+      isApplications: false,
+      isAdmin: false,
+      img: ''
     };
   }
 
@@ -60,6 +63,14 @@ class Filter extends Component {
       isCreateProduct: !isCreateProduct
     });
     document.body.style.overflow = !isCreateProduct ? 'hidden' : '';
+  }
+
+  toggleApplications = () => {
+    const { isApplications } = this.state;
+    this.setState({
+      isApplications: !isApplications
+    });
+    document.body.style.overflow = !isApplications ? 'hidden' : '';
   }
 
   componentDidMount() {
@@ -115,7 +126,8 @@ class Filter extends Component {
       if (response.status === 200 || response.status === 201) {
         const user = response.data.user;
         console.log('User data:', user); // Отладочный вывод
-        this.setState({ isAdmin: user.admin });
+        this.setState({ isAdmin: user.admin, img: user.img });
+        
         const {isAdmin} = this.state;
         console.log('isAdmin:', isAdmin );
         if(user.admin){
@@ -137,7 +149,7 @@ class Filter extends Component {
   }
 
   render() {
-    const { isDropdownOpen, isBasketOpen, isProfileOpen, isPurchasesOpen, isAdmin, isCreateProduct } = this.state;
+    const { isDropdownOpen, isBasketOpen, isProfileOpen, isPurchasesOpen, isAdmin, isCreateProduct,isApplications, img } = this.state;
     const animatedComponents = makeAnimated();
     const options = [
       { value: 'Australia', label: 'Australia' },
@@ -181,13 +193,16 @@ class Filter extends Component {
             <div className="Filter__mainWrapper__profileWrapper">
               <div className="Filter__mainWrapper__profileWrapper__clickArea" onClick={this.toggleDropdown}>
                 <span className='Filter__mainWrapper__profileWrapper__clickArea__name'>{username} ⮟ </span>
-                <img className='Filter__mainWrapper__profileWrapper__clickArea__img' src={iconUser} alt="упс" />
+                <img className='Filter__mainWrapper__profileWrapper__clickArea__img' src={img||iconUser} alt="упс" />
               </div>
               {isDropdownOpen && (
                 <div className="dropdown-menu" ref={(node) => { this.dropdownRef = node; }}>
                   <ul>
                     {isAdmin == true ? (
-                      <li className="dropdown-menu__itemCreate" onClick={this.toggleCreateProduct}><img src={iconCreate} alt="упс..." /><div>Создать продукт</div></li>
+                      <>
+                        <li className="dropdown-menu__itemCreate" onClick={this.toggleCreateProduct}><img src={iconCreate} alt="упс..." /><div>Создать продукт</div></li>
+                        <li className="dropdown-menu__item" onClick={this.toggleApplications}><img src={iconApplications} alt="упс..." /><div>Заявки</div></li>
+                      </>
                     ) : (
                       <>
                         <li className="dropdown-menu__item" onClick={this.toggleBasket}><img src={iconBasket} alt="упс..." /><div>Корзина</div></li>
@@ -200,10 +215,11 @@ class Filter extends Component {
                 </div>
               )}
              
-              {isBasketOpen && <Basket></Basket>}
-              {isProfileOpen && <Profile></Profile>}
-              {isPurchasesOpen && <Purchases></Purchases>}
-              {isCreateProduct && <CreateProduct></CreateProduct>}
+              {isBasketOpen && <Basket/>}
+              {isProfileOpen && <Profile/>}
+              {isPurchasesOpen && <Purchases/>}
+              {isCreateProduct && <CreateProduct/>}
+              {isApplications&& <Applications/>}
             </div>
           </div>
         </div>
