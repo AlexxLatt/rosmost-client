@@ -4,6 +4,7 @@ import profileIcon from "../../../icons/profile1.png";
 import './Profile.scss'; // Импорт CSS файла
 import loading from "../../../icons/loading.gif";
 import rofloLoading from "../../../icons/rofloLoading.gif";
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -11,19 +12,16 @@ class Profile extends Component {
       username: '',
       email: '',
       address: '',
-      passportSeries: '',
-      passportCode: '',
       firstName: '',
       secondName: '',
       patromicName: '',
+      tel: '',
       img: '',
       isProfileWindow: false,
       profileDataWindow: true,
-      isLoadingWindow:false,
+      isLoadingWindow: false,
       errors: {
-        passportSeries: '',
-        passportCode: '',
-        cardDate: '' // Общая ошибка для года и месяца карты
+        tel: '',
       }
     };
   }
@@ -51,16 +49,9 @@ class Profile extends Component {
     let errors = { ...this.state.errors };
 
     switch (name) {
-      case 'passportSeries':
-        errors.passportSeries = value.length !== 6 || !/^\d+$/.test(value) ? 'Серия должна содержать 6 цифр' : '';
-        break;
-      case 'passportCode':
-        errors.passportCode = value.length !== 4 || !/^\d+$/.test(value) ? 'Код должен содержать 4 цифры' : '';
-        break;
-      case 'cardYear':
-      case 'cardMonth':
-        errors.cardDate = (this.state.cardYear.length !== 2 || !/^\d+$/.test(this.state.cardYear) || this.state.cardMonth.length !== 2 || !/^\d+$/.test(this.state.cardMonth)) ? 'Год и месяц должны содержать по 2 цифры' : '';
-        break;
+      case 'tel':
+        errors.tel = !/^7\d{9,10}$/.test(value) ? 'Телефон должен начинаться с 7 и содержать 10 цифр' : '';
+      break;
       default:
         break;
     }
@@ -69,12 +60,10 @@ class Profile extends Component {
   };
 
   saveAndChange = () => {
-    const { errors, passportSeries, passportCode } = this.state;
+    const { errors, tel } = this.state;
 
     // Проверка на наличие ошибок валидации
-    if (errors.passportSeries || errors.passportCode ||
-        passportSeries.length !== 6 || passportCode.length !== 4 || 
-        !/^\d+$/.test(passportSeries) || !/^\d+$/.test(passportCode)) {
+    if (errors.tel || !/^\+?\d{10,15}$/.test(tel)) {
       console.error('Форма содержит ошибки. Проверьте введенные данные.');
       return;
     }
@@ -112,8 +101,7 @@ class Profile extends Component {
           username: user.username || '',
           email: user.email || '',
           address: user.address || '',
-          passportSeries: user.passportSeries || '',
-          passportCode: user.passportCode || '',
+          tel: user.tel || '',
           img: user.img || ''
         });
       } else {
@@ -126,7 +114,7 @@ class Profile extends Component {
 
   updateUser = async () => {
     try {
-      const { address, passportSeries, passportCode, username, email, img } = this.state;
+      const { address, tel, username, email, img } = this.state;
       const token = localStorage.getItem('token');
       if (!token) {
         console.log("Токен не найден в localStorage");
@@ -136,14 +124,11 @@ class Profile extends Component {
       const response = await axios.put('http://localhost:3000/userWithout', {
         user: {
           address: address,
-          passportSeries: passportSeries,
-          passportCode: passportCode,
+          tel: tel,
           username: username,
           email: email,
           img: img
         }
-      
-
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -194,7 +179,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { address, email, username, passportCode, passportSeries, img, isProfileWindow,isLoadingWindow, profileDataWindow, firstName, secondName, patromicName, errors } = this.state;
+    const { address, email, username, tel, img, isProfileWindow, isLoadingWindow, profileDataWindow, firstName, secondName, patromicName, errors } = this.state;
     return (
       <>
         {profileDataWindow && (
@@ -210,12 +195,8 @@ class Profile extends Component {
                 <div className="profile__window__wrapper__username label">Фамилия: {secondName}</div>
                 <div className="profile__window__wrapper__username label">Отчество: {patromicName}</div>
                 <div className="profile__window__wrapper__address label">Адрес: {address}</div>
-                <div className="profile__window__wrapper__passportSeries label">Серия паспорта: {passportSeries}</div>
-                {errors.passportSeries.length > 0 &&
-                  <div className='error'>{errors.passportSeries}</div>}
-                <div className="profile__window__wrapper__passportCode label">Код паспорта: {passportCode}</div>
-                {errors.passportCode.length > 0 &&
-                  <div className='error'>{errors.passportCode}</div>}
+                <div className="profile__window__wrapper__tel label">Телефон: {tel}</div>
+                {errors.tel.length > 0 && <div className='error'>{errors.tel}</div>}
                 <button onClick={this.toggleTwice} className="profile__window__wrapper__chengeData">Поменять и обновить данные</button>
               </div>
             </div>
@@ -275,27 +256,16 @@ class Profile extends Component {
                   value={address}
                   onChange={this.handleChange}
                 />
-                <label htmlFor="passportSeries">Серия паспорта</label>
+                <label htmlFor="tel">Телефон</label>
                 <input
-                  id="passportSeries"
-                  name="passportSeries"
+                  id="tel"
+                  name="tel"
                   className="profile__window__wrapper__input"
-                  value={passportSeries}
+                  value={tel}
                   onChange={this.handleChange}
                 />
-                {errors.passportSeries.length > 0 &&
-                  <span className='error'>{errors.passportSeries}</span>}
-                <label htmlFor="passportCode">Код паспорта</label>
-                <input
-                  id="passportCode"
-                  name="passportCode"
-                  className="profile__window__wrapper__input"
-                  value={passportCode}
-                  onChange={this.handleChange}
-                />
-                {errors.passportCode.length > 0 &&
-                  <span className='error'>{errors.passportCode}</span>}
-                <label className='labelImg' htmlFor="img">Изменить изображение профиля</label>
+                {errors.tel.length > 0 && <span className='error'>{errors.tel}</span>}
+         	      <label className='labelImg' htmlFor="img">Изменить изображение профиля</label>
                 <label class="input-file">
                 <input        
                   type="file"
@@ -306,18 +276,18 @@ class Profile extends Component {
                 />
                 <span>Выберите файл</span>  
                 </label>
-                <button onClick={this.saveAndChange} className="profile__window__wrapper__btn">Сохранить изменения</button>
+                {isLoadingWindow && (
+                    <div className='loading'>
+                      <div className="loading__window">
+                        <div className="loading__window__title">Загружаем изображение</div>
+                        <img className='loading__window__img' src={loading} alt="упс..." />
+                      </div>
+                  </div>
+                  )}
+                <button onClick={this.saveAndChange} className="profile__window__wrapper__chengeData">Сохранить</button>
               </div>
             </div>
           </div>
-        )}
-        {isLoadingWindow && (
-          <div className='loading'>
-            <div className="loading__window">
-              <div className="loading__window__title">Загружаем изображение</div>
-              <img className='loading__window__img' src={loading} alt="упс..." />
-            </div>
-         </div>
         )}
       </>
     );

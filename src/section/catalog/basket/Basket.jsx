@@ -16,8 +16,7 @@ class Basket extends Component {
     isPurchaseWindow: false,
     isEndWindow: false,
     address: '',
-    passportSeries: '',
-    passportCode: '',
+    tel:'',
     firstName: '',
     secondName: '',
     patromicName: '',
@@ -64,8 +63,7 @@ class Basket extends Component {
         this.setState({ 
           user, 
           address: user.address || '',
-          passportSeries: user.passportSeries || '',
-          passportCode: user.passportCode || ''
+          tel: user.tel || ''
         });
       } else {
         console.log('Unexpected status code:', response.status);
@@ -77,7 +75,7 @@ class Basket extends Component {
 
   async updateUser() {
     try {
-      const { address, passportSeries, passportCode, firstName, secondName, patromicName } = this.state;
+      const { address, tel, firstName, secondName, patromicName } = this.state;
       const token = localStorage.getItem('token');
       if (!token) {
         console.log("Token not found in localStorage");
@@ -87,8 +85,7 @@ class Basket extends Component {
       const response = await axios.put('http://localhost:3000/userWithout', {
         user: {
           address,
-          passportSeries,
-          passportCode,
+          tel,
           firstName,
           secondName,
           patromicName,
@@ -201,11 +198,8 @@ class Basket extends Component {
     let errors = { ...this.state.errors };
   
     switch (name) { 
-      case 'passportSeries':
-        errors.passportSeries = value.length !== 6 || !/^\d{6}$/.test(value) ? 'Серия паспорта должна содержать 6 цифр' : '';
-        break;
-      case 'passportCode':
-        errors.passportCode = value.length !== 4 || !/^\d{4}$/.test(value) ? 'Код подразделения должен содержать 4 цифры' : '';
+      case 'tel':
+        errors.tel = !/^7\d{9,10}$/.test(value) ? 'Телефон должен начинаться с 7 и содержать 10 цифр' : '';
         break;
       case 'cardNumber':
         errors.cardNumber = value.length !== 16 || !/^\d{16}$/.test(value) ? 'Номер карты должен содержать 16 цифр' : '';
@@ -235,9 +229,9 @@ class Basket extends Component {
   };
 
   toggleBuyInBasket = () => {
-    const { address, passportSeries, passportCode } = this.state;
+    const { address, tel } = this.state;
   
-    if (!address || !passportSeries || !passportCode || this.hasErrors()) {
+    if (!address || !tel  || this.hasErrors()) {
       this.setState({ isProfileWindow: true, isProductInBasket: false });
     } else {
       this.togglePurchaseWindow();
@@ -250,12 +244,10 @@ class Basket extends Component {
   };
   
   handleSaveAndProceed = () => {
-    const { errors, passportSeries, passportCode, address , firstName, secondName, patromicName, errorProf } = this.state;
+    const { errors,  tel, address , firstName, secondName, patromicName, errorProf } = this.state;
 
     // Проверка наличия ошибок валидации
-    if (errors.passportSeries || errors.passportCode ||
-        passportSeries.length !== 6 || passportCode.length !== 4 || 
-        !/^\d+$/.test(passportSeries) || !/^\d+$/.test(passportCode) || firstName.length == 0 || secondName.length == 0 || patromicName.length == 0 , address == 0) {
+    if (errors.tel ||  firstName.length == 0 || secondName.length == 0 || patromicName.length == 0 , address == 0) {
       console.error('Форма содержит ошибки. Проверьте введенные данные.');
       errorProf = "Введите все данные корректно";
       return;
@@ -302,7 +294,7 @@ class Basket extends Component {
   render() {
     const { 
       products, totalCost, isProductInBasket, isProfileWindow, 
-      address, passportSeries, passportCode, firstName, secondName, 
+      address, tel, firstName, secondName, 
       patromicName, isPurchaseWindow, isEndWindow, 
       cardNumber, cardMonth, cardYear, cardCvc, errors 
     } = this.state;
@@ -385,25 +377,15 @@ class Basket extends Component {
                 />
                 {errors.address && <div className="error">{errors.address}</div>}
                 
-                <label htmlFor="passportSeries">Серия паспорта</label>
+                <label htmlFor="tel">Телефон</label>
                 <input
-                  id="passportSeries"
-                  name="passportSeries"
+                  id="tel"
+                  name="tel"
                   className="profile__window__wrapper__input"
-                  value={passportSeries}
+                  value={tel}
                   onChange={this.handleChange}
                 />
-                {errors.passportSeries && <div className="error">{errors.passportSeries}</div>}
-                
-                <label htmlFor="passportCode">Код подразделения</label>
-                <input
-                  id="passportCode"
-                  name="passportCode"
-                  className="profile__window__wrapper__input"
-                  value={passportCode}
-                  onChange={this.handleChange}
-                />
-                {errors.passportCode && <div className="error">{errors.passportCode}</div>}
+                {errors.tel && <div className="error">{errors.tel}</div>}
                 
                 <div onClick={this.handleSaveAndProceed} className="profile__window__wrapper__btn">Сохранить и перейти к оплате</div>
               </div>

@@ -203,7 +203,10 @@ class ProductListItem extends Component {
                 <div className="productMenu__textWrapper__tags">
                   Перевозка: {currentProduct.tags}
                 </div>
-
+                <div className="productMenu__textWrapper__country">
+                  Страна: {currentProduct.country}
+                </div>
+                
 
                 <div className="productMenu__textWrapper__cost">{currentProduct.cost}р</div>
                 <button onClick={() => this.addProductToBasket(currentProduct.id)} className="productMenu__textWrapper__btn">
