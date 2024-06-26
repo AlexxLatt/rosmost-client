@@ -63,10 +63,11 @@
     text-align: center;
 }
 .input-file {
+    margin: 0 auto;    
 	position: relative;
 	display: inline-block;
     padding: 0px 20px 20px 20px;
-    transform: translateX(-3%);
+    
 }
 .input-file span {
 	position: relative;
@@ -159,4 +160,7 @@
 }
 .profile__window__wrapper label {
     margin-top: 0px;
+}
+.cent{
+    transform: translateX(-36%);
 }

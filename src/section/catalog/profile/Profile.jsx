@@ -266,12 +266,12 @@ class Profile extends Component {
                 />
                 {errors.tel.length > 0 && <span className='error'>{errors.tel}</span>}
          	      <label className='labelImg' htmlFor="img">Изменить изображение профиля</label>
-                <label class="input-file">
+                <label class="input-file  cent">
                 <input        
                   type="file"
                   id="img"
                   name="img"
-                  className="inputFile"
+                  className="inputFile cent"
                   onChange={this.handleImageChange}
                 />
                 <span>Выберите файл</span>  
